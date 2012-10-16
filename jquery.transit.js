@@ -150,7 +150,7 @@
   // ## 'transition' CSS hook
   // Allows you to use the `transition` property in CSS.
   //
-  //     $("#hello").css({ transition: 'all 0 ease 0' }); 
+  //     $("#hello").css({ transition: 'all 0 ease 0' });
   //
   $.cssHooks.transition = {
     get: function(elem) {
@@ -603,12 +603,18 @@
 
     $.cssHooks[prop] = {
       get: function(elem) {
-        var t = $(elem).css('transform') || new Transform();
+        var t = $(elem).css('transform');
+        if(!(t instanceof Transform)) {
+        	t = new Transform();
+        }
         return t.get(prop);
       },
 
       set: function(elem, value) {
-        var t = $(elem).css('transform') || new Transform();
+        var t = $(elem).css('transform');
+        if(!(t instanceof Transform)) {
+        	t = new Transform();
+        }
         t.setFromString(prop, value);
 
         $(elem).css({ transform: t });
